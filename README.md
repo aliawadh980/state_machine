@@ -8,7 +8,7 @@ The asscii [flowchart](http://asciiflow.com/) is awsome!
 The basic class idea taken from [stackoverflow](https://stackoverflow.com/questions/4274031/php-state-machine-framework) by [Gordon](https://stackoverflow.com/users/208809/gordon), thank you!
 
 #### And by adding my notes to it:
-I've created whole working code into a single PHP file, this way it is easier for me to read and understand simple basic flow of the code. Maybe it could be useful for others!
+I've created whole working code into a single PHP file called [test_machine1](test_machine1.php), this way it is easier for me to read and understand simple basic flow of the code. Maybe it could be useful for others!
 
 The states and transitions does not make sense because the implementation is hardcoded and very easy! This is just for understanding the flow. 
 This is to understand how the to implement state machine and how to link them with success and error state.
