@@ -111,10 +111,10 @@ First defining the states and transitions. The code below define the above car e
   $machine->addEvent('drive', array('idling'  => 'driving'));
   $machine->addEvent('stop',  array('driving' => 'idling'));
   $machine->addEvent('park',  array('idling'  => 'parked'));
-  $machine->setInitialState('parked');
 ```
 Then start the testing:
 ```php
+  $machine->setInitialState('parked');
   echo "<p>State: " . $machine->getCurrentState(); // should give: parked
   $machine->start();
   $machine->drive();
@@ -122,6 +122,8 @@ Then start the testing:
 ```
 And if calling a none defined transition *same as agove an error is thrown*:
 ```php
+  $machine->setInitialState('parked');
+
   try { $machine->drive(); } // cannot go from parked to driving
   catch(LogicException $e) { echo "<p>Error: " . $e->getMessage(); }
 
