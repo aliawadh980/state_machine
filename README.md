@@ -9,7 +9,7 @@ Plain Text [Tables generator](https://www.tablesgenerator.com/text_tables) is al
 - [Basic Class for State Machine](#first--basic-class-for-state-machine)
 - [General purpose Class for State Machine](#second--general-purpose-class-for-state-machine)
 - [Transaction logs with machine state](#third--transaction-logs-with-machine-state)
-- More complex real life transactional log handling -- *to be done*
+- More complex real life transactional log handling -- *to be done as forth example*
 
 ## First - Basic Class for State Machine
 The basic class idea taken from [stackoverflow](https://stackoverflow.com/questions/4274031/php-state-machine-framework) by [Gordon](https://stackoverflow.com/users/208809/gordon), thank you!
@@ -164,7 +164,7 @@ And the desired output is:
 | 2      | 2018-07-28 11:43:00 | 2018-07-28 11:58:00 | 3         | 2          | 2         | 6                |
 
 #### Note:
-This is not a stright forward state machine design!
+This is not a stright forward state machine design! Normally in real life scenarios the data is not stright forward having clear state and transition definition. In the car CSV file there is no state, but we managed to understand there is a secrete finite state machine classic example behind it. In example 4 this will be dealt with more details.
 
 ### Usage:
 The general class from example 2 will be used. Then read the data from CSV or inside PHP file
