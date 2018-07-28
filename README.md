@@ -41,5 +41,31 @@ Flowchart:
                             |                 |
                             +-- moveForward --+
 ```
-For any other transition not mentioned an error should be thrown or return false *depending on the context of the problem*
+For any other transition not mentioned an error should be thrown or return false *depending on the context of the problem that is needed to be solved.*
 
+#### Usage:
+```php
+  $car = new Car;
+  $car->startEngine();
+  $car->moveForward(); // works fine
+```
+And the only way allowed in start and keep moving forward only!
+```php
+  $car = new Car;
+  $car->startEngine();
+  $car->moveForward();
+  $car->moveForward(); // works fine
+```
+Any other usage will throws exception as per the code and try & catch is needed here:
+```php
+  try { $car = new Car; 
+    $car->moveForward();  
+  } // throws Exception
+  catch(LogicException $e) { echo $e->getMessage(); }
+
+  try { $car = new Car;
+    $car->startEngine();
+    $car->startEngine(); 
+  }  // throws Exception
+  catch(LogicException $e) { echo $e->getMessage(); }
+```
