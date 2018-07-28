@@ -166,6 +166,8 @@ And the desired output is:
 #### Note:
 This is not a stright forward state machine design! Normally in real life scenarios the data is not stright forward having clear state and transition definition. In the car CSV file there is no state, but we managed to understand there is a secrete finite state machine classic example behind it. In example 4 this will be dealt with more details.
 
+More insights can be generated from the the simple car CSV file provided, like making use of `Location` to get unique visited lcoations, time spent in each location per ride, per day, average time spent per location, and so on!
+
 ### Usage:
 The general class from example 2 will be used. Then read the data from CSV or inside PHP file
 ```php
