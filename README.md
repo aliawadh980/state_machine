@@ -43,7 +43,7 @@ Flowchart:
 ```
 For any other transition not mentioned an error should be thrown or return false *depending on the context of the problem that is needed to be solved.*
 
-#### Usage:
+### Usage:
 ```php
   $car = new Car;
   $car->startEngine();
@@ -58,14 +58,20 @@ And the only way allowed in start and keep moving forward only!
 ```
 Any other usage will throws exception as per the code and try & catch is needed here:
 ```php
-  try { $car = new Car; 
+  try { 
+    $car = new Car; 
     $car->moveForward();  
   } // throws Exception
-  catch(LogicException $e) { echo $e->getMessage(); }
+  catch(LogicException $e) { 
+    echo $e->getMessage(); 
+  }
 
-  try { $car = new Car;
+  try { 
+    $car = new Car;
     $car->startEngine();
     $car->startEngine(); 
   }  // throws Exception
-  catch(LogicException $e) { echo $e->getMessage(); }
+  catch(LogicException $e) { 
+    echo $e->getMessage(); 
+  }
 ```
