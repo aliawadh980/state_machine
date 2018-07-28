@@ -5,9 +5,11 @@ Simple state machine code using PHP, then transform it to be able to convert tra
 The asscii [flowchart](http://asciiflow.com/) is awsome!
 
 # First Basic Class for State Machine
-The basic class idea taken [from](https://stackoverflow.com/questions/4274031/php-state-machine-framework).
+The basic class idea taken from [stackoverflow](https://stackoverflow.com/questions/4274031/php-state-machine-framework) by [Gordon](https://stackoverflow.com/users/208809/gordon), thank you!
 
 ##### And by adding my notes to it
+I've created whole working code into a single PHP file, this way it is easier for me to read and understand simple basic flow of the code. Maybe it could be useful for others!
+
 The states and transitions does not make sense because the implementation is hardcoded and very easy! This is just for understanding the flow. 
 This is to understand how the to implement state machine and how to link them with success and error state.
 Please see the 2nd example that makes sense!
