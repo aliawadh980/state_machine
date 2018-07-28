@@ -15,19 +15,18 @@ Please see the 2nd example that makes sense!
 ##### Note 2
 The states and transitions are hardcoded in the class!
 
-car states: (3rd is introduced by me)
+Car states: (3rd is introduced by me)
 ```
   - OffState
   - OnState
   - driveState (hidden as it is hardcoded twice in the above two states!)
 ```
-
-transitions:
+Transitions:
 ```
   - startEngine: OffState -> OnState
   - moveForward: OnState  -> OnState
 ```
-
+Flowchart:
 ```
       +--+ startEngine   +--+
       |    & moveForward    |
@@ -40,4 +39,5 @@ transitions:
                             |                 |
                             +-- moveForward --+
 ```
+For any other transition not mentioned an error should be thrown or return false *depending on the context of the problem*
 
