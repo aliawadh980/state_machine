@@ -3,6 +3,10 @@ Simple state machine code using PHP, then transform it to be able to convert tra
 
 The asscii [flowchart](http://asciiflow.com/) is awsome!
 
+## Table of contents
+- [First - Basic Class for State Machine](#first--basic-class-for-state-machine)
+- [Second - General purpose Class for State Machine](#second--general-purpose-class-for-state-machine)
+
 ## First - Basic Class for State Machine
 The basic class idea taken from [stackoverflow](https://stackoverflow.com/questions/4274031/php-state-machine-framework) by [Gordon](https://stackoverflow.com/users/208809/gordon), thank you!
 #### And by adding my notes to it:
