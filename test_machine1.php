@@ -1,5 +1,4 @@
 <?PHP
-
   interface EngineState {
     public function startEngine();
     public function moveForward();
@@ -64,5 +63,4 @@
     $car->startEngine();
     $car->startEngine(); }  // throws Exception
   catch(LogicException $e) { echo $e->getMessage(); }
-
 ?>
