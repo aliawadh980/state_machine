@@ -10,6 +10,7 @@ Plain Text [Tables generator](https://www.tablesgenerator.com/text_tables) is al
 - [General purpose Class for State Machine](#second--general-purpose-class-for-state-machine)
 - [Transaction logs with machine state](#third--transaction-logs-with-machine-state)
 - [Real life example based on the Car Example]($forth--real-life-example-based-the-car-example)
+- Do the same in R -- *To be done*
 
 ## First - Basic Class for State Machine
 The basic class idea taken from [stackoverflow](https://stackoverflow.com/questions/4274031/php-state-machine-framework) by [Gordon](https://stackoverflow.com/users/208809/gordon), thank you!
