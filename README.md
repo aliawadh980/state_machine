@@ -9,7 +9,7 @@ Plain Text [Tables generator](https://www.tablesgenerator.com/text_tables) is al
 - [Basic Class for State Machine](#first--basic-class-for-state-machine)
 - [General purpose Class for State Machine](#second--general-purpose-class-for-state-machine)
 - [Transaction logs with machine state](#third--transaction-logs-with-machine-state)
-- More complex real life transactional log handling -- *to be done as forth example*
+- [Real life example based on the Car Example]($forth--real-life-example-based-the-car-example)
 
 ## First - Basic Class for State Machine
 The basic class idea taken from [stackoverflow](https://stackoverflow.com/questions/4274031/php-state-machine-framework) by [Gordon](https://stackoverflow.com/users/208809/gordon), thank you!
@@ -262,6 +262,126 @@ Finally we have the desired output, write it back to CSV / DB or just display it
     }
     echo "<br>"; 
   }
+```
+
+## Forth - Real Life Example based on the Car Example
+The code is done in single PHP file [car_transactionlog2](car_transactionlog2.php).
+
+I'll jump directly to the input file:
+```PHP
+  # Header: Date, carID, Transition, Location, Notes_for_clarifying
+  $car2csv = array(
+    array("2018-07-28 08:15:00", "1113", "start", "Home",          ""), 
+    array("2018-07-28 08:20:00", "1113", "drive", "Road",          ""), 
+    array("2018-07-28 08:45:00", "1113", "stop",  "Work",          ""), 
+    array("2018-07-28 08:50:00", "1113", "park",  "Work",          ""), 
+    array("2018-07-28 10:50:00", "1111", "start", "Home",          ""), 
+    array("2018-07-28 10:50:00", "1111", "stop",  "Home",          "This is not valid"), 
+    array("2018-07-28 10:52:00", "1112", "start", "Home",          ""), 
+    array("2018-07-28 10:52:00", "1115", "start", "Home",          ""), 
+    array("2018-07-28 10:53:00", "1112", "drive", "Road",          ""), 
+    array("2018-07-28 10:53:00", "1115", "drive", "Road",          "In driving state"), 
+    array("2018-07-28 10:55:00", "1111", "drive", "Road",          ""), 
+    array("2018-07-28 10:57:00", "1112", "stop",  "Home",          ""), 
+    array("2018-07-28 10:58:00", "1112", "park",  "Home",          ""), 
+    array("2018-07-28 11:04:00", "1111", "stop",  "Traffic light", ""), 
+    array("2018-07-28 11:06:00", "1111", "drive", "Highway",       ""), 
+    array("2018-07-28 11:12:00", "1114", "start", "Home",          ""), 
+    array("2018-07-28 11:13:00", "1114", "drive", "Road",          ""), 
+    array("2018-07-28 11:15:00", "1111", "stop",  "Traffic light", ""), 
+    array("2018-07-28 11:15:00", "1114", "stop",  "Supermarket",   ""), 
+    array("2018-07-28 11:15:00", "1114", "park",  "Supermarket",   ""), 
+    array("2018-07-28 11:16:00", "1111", "drive", "Road",          ""), 
+    array("2018-07-28 11:18:00", "1111", "stop",  "Supermarket",   ""), 
+    array("2018-07-28 11:19:00", "1111", "park",  "Supermarket",   ""), 
+    array("2018-07-28 11:43:00", "1111", "start", "Supermarket",   ""), 
+    array("2018-07-28 11:44:00", "1111", "drive", "Highway",       ""), 
+    array("2018-07-28 11:55:00", "1111", "stop",  "Traffic light", ""), 
+    array("2018-07-28 11:56:00", "1111", "drive", "road",          ""), 
+    array("2018-07-28 11:58:00", "1111", "stop",  "Home",          ""), 
+    array("2018-07-28 11:58:00", "1111", "park",  "Home",          ""), 
+    array("2018-07-28 13:10:00", "1116", "start", "Home",          ""), 
+    array("2018-07-28 13:11:00", "1116", "drive", "Road",          ""), 
+    array("2018-07-28 13:24:00", "1116", "stop",  "Traffic light", "In idling state"), 
+  );
+```
+And looking the the desired output:
+
+|carID | rideID | StartDate           | TransitionErrorCount  | EndDate             | IdleCount | DriveCount | StopCount | TotalTransitions | Finished | LastState | LastStateDate       |
+|---   |---     |---                  | ---                   |---                  |---        |---         |---        |---               |---       |---        |---                  |
+|1113  | 0      | 2018-07-28 08:15:00 | 0                     | 2018-07-28 08:50:00 | 2         | 1          | 1         | 4                | Yes      | park      | 2018-07-28 08:50:00 |
+|1111  | 0      | 2018-07-28 10:50:00 | 1                     | 2018-07-28 11:19:00 | 4         | 3          | 3         | 8                | Yes      | park      | 2018-07-28 11:19:00 |
+|1111  | 1      | 2018-07-28 11:43:00 | 0                     | 2018-07-28 11:58:00 | 3         | 2          | 2         | 6                | Yes      | park      | 2018-07-28 11:58:00 |
+|1112  | 0      | 2018-07-28 10:52:00 | 0                     | 2018-07-28 10:58:00 | 2         | 1          | 1         | 4                | Yes      | park      | 2018-07-28 10:58:00 |
+|1115  | 0      | 2018-07-28 10:52:00 | 0                     |                     | 1         | 1          | 0         | 2                | No       | drive     | 2018-07-28 10:53:00 |
+|1114  | 0      | 2018-07-28 11:12:00 | 0                     | 2018-07-28 11:15:00 | 2         | 1          | 1         | 4                | Yes      | park      | 2018-07-28 11:15:00 |
+|1116  | 0      | 2018-07-28 13:10:00 | 0                     |                     | 2         | 1          | 1         | 3                | No       | stop      | 2018-07-28 13:24:00 |
+
+
+### Note:
+Here finding the solution depends on the context of the problem and what is the desired solution looking for. For this example the problem and solution is completely make from my own.
+
+### Usage:
+The code should be easy to go through which is based on the previous examples.
+
+```PHP
+  $carIDHistory = array();
+  $carArray     = array();
+
+  foreach ($car2csv as $carentry) {
+    if(!isset ($machine[$carentry[1]])) {
+      $machine[$carentry[1]] = new FiniteStateMachine();
+      $machine[$carentry[1]]->addEvent('start', array('parked' => 'idling'));
+      $machine[$carentry[1]]->addEvent('drive', array('idling' => 'driving'));
+      $machine[$carentry[1]]->addEvent('stop', array('driving' => 'idling'));
+      $machine[$carentry[1]]->addEvent('park', array('idling' => 'parked'));
+      $machine[$carentry[1]]->setInitialState('parked');
+    }
+
+    # Start of the record
+    if ($machine[$carentry[1]]->getCurrentState() == "parked" && $carentry[2] == "start") { 
+
+      if (!isset ($carIDHistory[$carentry[1]])) {
+        $carIDHistory[$carentry[1]] = $carentry[1];
+        $carArray[$carentry[1]] = 0;
+      }
+
+      $car1record[$carentry[1]][$carArray[$carentry[1]]]['carID']                = $carentry[1];
+      $car1record[$carentry[1]][$carArray[$carentry[1]]]['rideID']               = $carArray[$carentry[1]];
+      $car1record[$carentry[1]][$carArray[$carentry[1]]]['StartDate']            = $carentry[0];
+      $car1record[$carentry[1]][$carArray[$carentry[1]]]['TransitionErrorCount'] = 0;
+      $car1record[$carentry[1]][$carArray[$carentry[1]]]['EndDate']              = "";
+      $car1record[$carentry[1]][$carArray[$carentry[1]]]['IdleCount']            = 0;
+      $car1record[$carentry[1]][$carArray[$carentry[1]]]['DriveCount']           = 0;
+      $car1record[$carentry[1]][$carArray[$carentry[1]]]['StopCount']            = 0;
+      $car1record[$carentry[1]][$carArray[$carentry[1]]]['TotalTransitions']     = 0;
+      $car1record[$carentry[1]][$carArray[$carentry[1]]]['Finished']             = "No";
+    }
+
+    # process the transaction logs rows
+    $result = $machine[$carentry[1]]->$carentry[2]();
+    $car1record[$carentry[1]][$carArray[$carentry[1]]]['LastState']      = $carentry[2];
+    $car1record[$carentry[1]][$carArray[$carentry[1]]]['LastStateDate']  = $carentry[0];
+
+    if ($result) {
+      if ($machine[$carentry[1]]->getCurrentState() == "idling")  $car1record[$carentry[1]][$carArray[$carentry[1]]]['IdleCount']++;
+      if ($machine[$carentry[1]]->getCurrentState() == "driving") $car1record[$carentry[1]][$carArray[$carentry[1]]]['DriveCount']++; // or IdleCount - 1
+      if ($carentry[2]                              == "stop")    $car1record[$carentry[1]][$carArray[$carentry[1]]]['StopCount']++;  // or IdleCount - 1
+      $car1record[$carentry[1]][$carArray[$carentry[1]]]['TotalTransitions']++;
+    }
+    else {
+      $car1record[$carentry[1]][$carArray[$carentry[1]]]['TransitionErrorCount']++;
+    }
+
+    # End of the record
+    if ($machine[$carentry[1]]->getCurrentState() == "parked" && $carentry[2] == "park") {
+      $car1record[$carentry[1]][$carArray[$carentry[1]]]['carID']                = $carentry[1];
+      $car1record[$carentry[1]][$carArray[$carentry[1]]]['rideID']               = $carArray[$carentry[1]];
+      $car1record[$carentry[1]][$carArray[$carentry[1]]]['EndDate']              = $carentry[0];
+      $car1record[$carentry[1]][$carArray[$carentry[1]]]['Finished']             = "Yes";
+      $carArray[$carentry[1]]++;
+    }
+  } // foreach ($car2csv as $carentry)
 ```
 
 ## Credits
